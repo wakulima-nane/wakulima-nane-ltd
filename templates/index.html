@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wakulima Nane Ltd</title>
+<style>
+body{font-family:Arial;background:#f0fdf4;margin:0;padding:15px}
+.header{background:#16a34a;color:white;padding:18px;border-radius:12px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:15px}
+.card{background:white;padding:14px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.08);border-left:5px solid #22c55e}
+.price{font-weight:bold;color:#16a34a;font-size:1.2em}
+.badge{background:#dcfce7;color:#166534;padding:2px 7px;border-radius:10px;font-size:0.7em}
+input{width:100%;padding:10px;border:2px solid #16a34a;border-radius:8px}
+</style></head><body>
+<div class="header"><h1 style="margin:0">🌾 Wakulima Nane Ltd</h1><p>8 Farmers • Farm + Home Pests</p></div>
+<input id="search" placeholder="Search: Armyworm, Bedbugs, Mosquitoes..." onkeyup="filter()">
+<div id="grid" class="grid"></div>
+<script>
+let all={{ products|tojson }};
+function render(l){
+document.getElementById('grid').innerHTML=l.map(p=>`
+<div class="card">
+<b>${p.pest}</b><br>${p.chemical}<br><small>${p.use}</small>
+<div class="price">From KSh ${p.price} <span class="badge">Wholesale on call</span></div>
+<a href="https://wa.me/254716339290?text=Nataka ${p.chemical}" style="display:block;background:#22c55e;color:white;text-align:center;padding:7px;border-radius:6px;text-decoration:none;margin-top:8px">Order WhatsApp</a>
+</div>`).join('');
+}
+function filter(){
+let q=document.getElementById('search').value.toLowerCase();
+render(all.filter(p=>p.pest.toLowerCase().includes(q)||p.chemical.toLowerCase().includes(q)))
+}
+render(all);
+</script></body></html>
